@@ -2,6 +2,7 @@ package io.brooklyn.chef.solo.entities;
 
 import static brooklyn.entity.basic.lifecycle.CommonCommands.sudo;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -10,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import brooklyn.entity.basic.AbstractSoftwareProcessSshDriver;
 import brooklyn.entity.basic.lifecycle.CommonCommands;
 import brooklyn.entity.database.mysql.MySqlDriver;
-import brooklyn.entity.database.mysql.MySqlNode;
+import brooklyn.entity.database.mysql.MySqlNodeImpl;
 import brooklyn.location.basic.SshMachineLocation;
 
 /**
@@ -21,7 +22,7 @@ public class MySqlChefSoloSshDriver extends AbstractSoftwareProcessSshDriver imp
 
     public static final Logger log = LoggerFactory.getLogger(MySqlChefSoloSshDriver.class);
 
-    public MySqlChefSoloSshDriver(MySqlNode entity, SshMachineLocation machine) {
+    public MySqlChefSoloSshDriver(MySqlNodeImpl entity, SshMachineLocation machine) {
         super(entity, machine);
     }
 
@@ -45,7 +46,7 @@ public class MySqlChefSoloSshDriver extends AbstractSoftwareProcessSshDriver imp
         String server_repl_password = "password";
         String server_debian_password = "password";
         // build installation commands
-        List<String> commands = CommonCommands.installChefClientAndSolo();
+        List<String> commands = installChefClientAndSolo();
         commands.add(CommonCommands.installPackage("git"));
         commands.add(sudo(String.format("git clone %s %s", opensslCookbookRepository, opensslCookbookPath)));
         commands.add(sudo(String.format("git clone %s %s", mysqlCookbookRepository, mysqlCookbookPath)));
@@ -60,11 +61,20 @@ public class MySqlChefSoloSshDriver extends AbstractSoftwareProcessSshDriver imp
                      "      \"server_debian_password\": \"" + server_debian_password + "\"" + "}, " + 
                      "    \"run_list\":[\"recipe[mysql::server]\"] " + 
                      "}' >> " + mysqlCookbookJson + "; ");
+        
         // run chef-solo
         commands.add(sudo(String.format("chef-solo -c %s " + "-j %s; ", solo_rb, mysqlCookbookJson)));
         newScript(INSTALLING).body.append(commands).failOnNonZeroResultCode().execute();
     }
 
+    public static List<String> installChefClientAndSolo() {
+        List<String> commands = new LinkedList<String>();
+        commands.add(CommonCommands.INSTALL_CURL);
+        // NB: chef-solo command is packaged together with chef-client.
+        commands.add("sudo true && curl -L https://www.opscode.com/chef/install.sh | sudo bash;");
+        return commands;
+    }
+    
     @Override
     public void customize() {
         log.debug("Nothing to customize");
@@ -88,7 +98,7 @@ public class MySqlChefSoloSshDriver extends AbstractSoftwareProcessSshDriver imp
     }
 
     @Override
-    public MySqlNode getEntity() {
-        return (MySqlNode) super.getEntity();
+    public MySqlNodeImpl getEntity() {
+        return (MySqlNodeImpl) super.getEntity();
     }
 }
