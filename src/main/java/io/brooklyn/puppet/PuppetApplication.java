@@ -18,6 +18,7 @@ import brooklyn.launcher.BrooklynLauncher;
 import brooklyn.launcher.BrooklynServerDetails;
 import brooklyn.location.Location;
 import brooklyn.location.basic.SshMachineLocation;
+import brooklyn.location.basic.jclouds.JcloudsLocation;
 import brooklyn.util.CommandLineUtil;
 
 import com.google.common.collect.ImmutableList;
@@ -35,6 +36,7 @@ public class PuppetApplication extends ApplicationBuilder {
     }
 
     public static void main(String[] argv) {
+        
         List<String> args = Lists.newArrayList(argv);
         String port = CommandLineUtil.getCommandLineOption(args, "--port", "8081+");
         String location = CommandLineUtil.getCommandLineOption(args, "--location", DEFAULT_LOCATION);

@@ -60,6 +60,11 @@
 			<version>${brooklyn.version}</version>
 		</dependency>
 		<dependency>
+            <groupId>io.brooklyn</groupId>
+            <artifactId>brooklyn-software-webapp</artifactId>
+            <version>${brooklyn.version}</version>
+        </dependency>
+		<dependency>
 			<groupId>io.brooklyn</groupId>
 			<artifactId>brooklyn-logback-xml</artifactId>
 			<version>${brooklyn.version}</version>
