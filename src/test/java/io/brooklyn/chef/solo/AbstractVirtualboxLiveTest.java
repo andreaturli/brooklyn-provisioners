@@ -60,7 +60,7 @@ public abstract class AbstractVirtualboxLiveTest {
         runTest(ImmutableMap.of("loginUser", "toor", "loginUser.password", "password"));
     }
 
-    @Test(groups = {"Live"})
+    @Test(dependsOnMethods = "test_Ubuntu_12_0", groups = {"Live"})
     public void test_CentOS_6_3() throws Exception {
         runTest(ImmutableMap.of("loginUser", "toor", "loginUser.password", "password"));
     }
