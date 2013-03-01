@@ -43,6 +43,11 @@
 			<artifactId>brooklyn-core</artifactId>
 			<version>${brooklyn.version}</version>
 		</dependency>
+        <dependency>
+            <groupId>io.brooklyn</groupId>
+            <artifactId>brooklyn-locations-jclouds</artifactId>
+            <version>${brooklyn.version}</version>
+        </dependency>		
 		<dependency>
 			<groupId>io.brooklyn</groupId>
 			<artifactId>brooklyn-api</artifactId>
@@ -70,6 +75,27 @@
 			<version>${brooklyn.version}</version>
 			<optional>true</optional>
 		</dependency>
+		
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>brooklyn-test-support</artifactId>
+            <version>${brooklyn.version}</version>
+            <scope>test</scope>
+        </dependency>	
+        <dependency>
+            <groupId>io.brooklyn</groupId>
+            <artifactId>brooklyn-core</artifactId>
+            <version>${brooklyn.version}</version>
+            <classifier>tests</classifier>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.brooklyn</groupId>
+            <artifactId>brooklyn-software-base</artifactId>
+            <version>${brooklyn.version}</version>
+            <classifier>tests</classifier>
+            <scope>test</scope>
+        </dependency>             
 	</dependencies>
 
 	<build>

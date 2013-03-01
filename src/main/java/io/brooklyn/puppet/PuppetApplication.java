@@ -18,7 +18,6 @@ import brooklyn.launcher.BrooklynLauncher;
 import brooklyn.launcher.BrooklynServerDetails;
 import brooklyn.location.Location;
 import brooklyn.location.basic.SshMachineLocation;
-import brooklyn.location.basic.jclouds.JcloudsLocation;
 import brooklyn.util.CommandLineUtil;
 
 import com.google.common.collect.ImmutableList;

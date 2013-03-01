@@ -92,4 +92,9 @@ public class MySqlPuppetSshDriver extends AbstractSoftwareProcessSshDriver imple
     public MySqlNodeImpl getEntity() {
         return (MySqlNodeImpl) super.getEntity();
     }
+
+    @Override
+    public String getStatusCmd() {
+        return "ps aux | grep [m]ysql";
+    }
 }
