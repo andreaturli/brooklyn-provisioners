@@ -19,12 +19,10 @@ import brooklyn.location.basic.SshMachineLocation;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
 
 /**
  * The SSH implementation of the {@link MySqlDriver}.
  */
-
 public class MySqlPuppetSshDriver extends AbstractSoftwareProcessSshDriver implements MySqlDriver {
 
     private static final String MYSQL_PUPPET_MODULE = "puppetlabs/mysql";
@@ -42,13 +40,12 @@ public class MySqlPuppetSshDriver extends AbstractSoftwareProcessSshDriver imple
     public void install() {
         List<String> commands = ImmutableList.of(installPuppet(), 
                                                  installPuppetModule(MYSQL_PUPPET_MODULE),
-                                                 createPpFileOnInstallDir(PP_FILE),
-                                                 applyPuppetModule(PP_FILE));
+                                                 createPP(PP_FILE));
         newScript(INSTALLING).body.append(commands).failOnNonZeroResultCode().execute();
     }
 
-    private String createPpFileOnInstallDir(String ppName) {
-        return String.format("echo ' class { 'mysql::server': config_hash => { 'root_password' => '%s', }, }' >> %s", 
+    private String createPP(String ppName) {
+        return String.format("echo 'class { 'mysql::server': config_hash => { 'root_password' => '%s', }, }' >> %s", 
                             getPassword(), ppName);
     }
 
@@ -59,14 +56,14 @@ public class MySqlPuppetSshDriver extends AbstractSoftwareProcessSshDriver imple
 
     @Override
     public void launch() {
-        List<String> commands = Lists.newArrayList();
-        commands.add("pidof mysqld > pid.txt");
+        List<String> commands = ImmutableList.of(applyPuppetModule(PP_FILE));
         newScript(LAUNCHING).body.append(commands).updateTaskAndFailOnNonZeroResultCode().execute();
     }
 
     @Override
     public boolean isRunning() {
-        return newScript(ImmutableMap.of("usePidFile", true), CHECK_RUNNING).execute() == 0;
+        List<String> commands = ImmutableList.of("ps aux | grep [m]ysql");
+        return newScript(CHECK_RUNNING).body.append(commands).execute() == 0;
     }
 
     @Override
@@ -95,13 +92,13 @@ public class MySqlPuppetSshDriver extends AbstractSoftwareProcessSshDriver imple
      *  
      * @return the commands that runs a Puppet module.
      */
-    private static String applyPuppetModule(String ppName)  {       
-        return sudo(format("puppet apply %s --verbose", ppName));
+    private String applyPuppetModule(String ppName)  {       
+        return sudo(format("puppet apply %s/%s --verbose", getInstallDir(), ppName));
     }
     
     /**
      * Returns the commands that installs a Puppet module.
-     * By default, when exectuted as sudo, it will install puppet modules at "/etc/puppet/modules"
+     * By default, when executed as sudo, it will install puppet modules at "/etc/puppet/modules"
      * 
      * @return the commands that installs a Puppet module.
      */

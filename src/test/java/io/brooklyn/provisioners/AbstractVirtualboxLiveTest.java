@@ -35,7 +35,6 @@ public abstract class AbstractVirtualboxLiveTest {
     
     @BeforeMethod(alwaysRun=true)
     public void setUp() throws Exception {
-        // Don't let any defaults from brooklyn.properties (except credentials) interfere with test
         brooklynProperties = BrooklynProperties.Factory.newDefault();
         brooklynProperties.remove("brooklyn.jclouds."+PROVIDER+".image-description-regex");
         brooklynProperties.remove("brooklyn.jclouds."+PROVIDER+".image-name-regex");
