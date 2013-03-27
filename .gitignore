@@ -4,5 +4,5 @@
 target/
 .DS_Store
 brooklyn.log
-brooklyn-test.log
+brooklyn-tests.log
 test-output

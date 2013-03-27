@@ -1,6 +1,6 @@
 package io.brooklyn.provisioners.chef.solo.entities;
 
-import static brooklyn.entity.basic.lifecycle.CommonCommands.sudo;
+import static brooklyn.util.ssh.CommonCommands.sudo;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -12,11 +12,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import brooklyn.entity.basic.AbstractSoftwareProcessSshDriver;
-import brooklyn.entity.basic.lifecycle.CommonCommands;
 import brooklyn.entity.database.mysql.MySqlDriver;
 import brooklyn.entity.database.mysql.MySqlNodeImpl;
 import brooklyn.location.basic.SshMachineLocation;
 import brooklyn.util.exceptions.Exceptions;
+import brooklyn.util.ssh.CommonCommands;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;

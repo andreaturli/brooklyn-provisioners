@@ -18,7 +18,7 @@ import brooklyn.util.MutableMap;
 import com.google.common.collect.ImmutableMap;
 
 /**
- * Runs a test with many different distros and versions.
+ * Runs a test with different distros and versions.
  */
 public abstract class AbstractVirtualboxLiveTest {
     

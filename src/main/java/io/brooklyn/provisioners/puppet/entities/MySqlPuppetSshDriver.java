@@ -1,9 +1,9 @@
 package io.brooklyn.provisioners.puppet.entities;
 
-import static brooklyn.entity.basic.lifecycle.CommonCommands.INSTALL_WGET;
-import static brooklyn.entity.basic.lifecycle.CommonCommands.alternatives;
-import static brooklyn.entity.basic.lifecycle.CommonCommands.exists;
-import static brooklyn.entity.basic.lifecycle.CommonCommands.sudo;
+import static brooklyn.util.ssh.CommonCommands.INSTALL_WGET;
+import static brooklyn.util.ssh.CommonCommands.alternatives;
+import static brooklyn.util.ssh.CommonCommands.exists;
+import static brooklyn.util.ssh.CommonCommands.sudo;
 import static java.lang.String.format;
 
 import java.util.LinkedList;
