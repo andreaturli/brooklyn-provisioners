@@ -25,6 +25,24 @@ public class PuppetLiveTest extends AbstractEc2LiveTest {
     private MySqlNode mysql;
 
     @Override
+    @Test(groups = "Live")
+    public void test_Debian_6() throws Exception {
+        LOG.info("Not yet supported");
+    }
+
+    @Override
+    @Test(groups = "Live")
+    public void test_CentOS_6_3() throws Exception {
+        LOG.info("Not yet supported");
+    }
+
+    @Override
+    @Test(groups = "Live")
+    public void test_Red_Hat_Enterprise_Linux_6() throws Exception {
+        LOG.info("Not yet supported");
+    }
+
+    @Override
     protected void doTest(Location loc) throws Exception {
         EntityDriverManager entityDriverManager = ctx.getEntityDriverManager();
         entityDriverManager.registerDriver(MySqlDriver.class, SshMachineLocation.class, MySqlPuppetSshDriver.class);

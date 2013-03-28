@@ -24,6 +24,18 @@ public class ChefSoloLiveTest extends AbstractEc2LiveTest {
     public static final Logger LOG = LoggerFactory.getLogger(ChefSoloLiveTest.class);
 
     private MySqlNode mysql;
+    
+    @Override
+    @Test(groups = "Live")
+    public void test_Debian_6() throws Exception {
+        LOG.debug("Not yet supported");
+    }
+
+    @Override
+    @Test(groups = "Live")
+    public void test_CentOS_5_6() throws Exception {
+        LOG.debug("Not yet supported");
+    }
 
     @Override
     protected void doTest(Location loc) throws Exception {
